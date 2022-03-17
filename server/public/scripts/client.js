@@ -19,7 +19,7 @@ function setupClickListeners() {
       name: 'testName',
       age: 'testName',
       gender: 'testName',
-      readyForTransfer: 'testName',
+      ready_to_transfer: 'testName',
       notes: 'testName',
     };
     // call saveKoala with the new obejct
@@ -35,7 +35,7 @@ function getKoalas(){
       url: '/koalas'
     }).then(function(response) {
       console.log(response);
-      //render function()
+      render(response);
     }).catch(function(err){
       console.log('error in GET', err);
     });
@@ -57,9 +57,12 @@ function render(koalas){
         <td>${koala.name}</td>
         <td>${koala.age}</td>
         <td>${koala.gender}</td>
-        <td>${koala.readyForTransfer}</td>
+        <td>${koala.ready_to_transfer}</td>
         <td>${koala.notes}</td>
       </tr>
       `)
+
+    row.data('koala', koala);
+    $('#viewKoalas').append(row);
     }
 }
