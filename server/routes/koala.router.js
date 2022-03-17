@@ -1,6 +1,9 @@
 const express = require('express');
 const koalaRouter = express.Router();
 
+//added static services for server
+const pool = require('../modules/pool');
+
 // DB CONNECTION
 
 
