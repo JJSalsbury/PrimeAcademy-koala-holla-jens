@@ -69,7 +69,7 @@ function updateKoala(){
   let koala = $(this).closest("tr").data("koala");
   let id = koala.id;
 
-  // console.log(koala, id);
+  console.log(koala, id);
 
   //ajax PUT request to send ID and transfer status:
 
