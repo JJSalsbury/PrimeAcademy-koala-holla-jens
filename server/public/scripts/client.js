@@ -25,6 +25,7 @@ function setupClickListeners() {
     };
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
+    $('input').val('');
   }); 
 
   $('#viewKoalas').on('click', '.transferBtn', updateKoala);
@@ -92,29 +93,29 @@ function render(koalas){
   $('#viewKoalas').empty();
     for(let koala of koalas){
 
+      let button = "";
+
+      if (koala.ready_to_transfer === false) {
+        button = (`<button class="transferBtn">Ready To Transfer</button>`);
+         // console.log('there should be 2 of these logs');
+       }
+
       let row = $(`
       <tr>
         <td>${koala.name}</td>
         <td>${koala.age}</td>
         <td>${koala.gender}</td>
-        <td>${koala.ready_to_transfer}<button class="transferBtn">Toggle Transfer</button></td>
+        <td>${koala.ready_to_transfer}</td>
+        <td>${button}</td>
         <td>${koala.notes}</td>
       </tr>
       `)
 
-      //Create conditional that adds ready to transfer button
-      // if (koala.ready_to_transfer === false) {
-      //   // $('.transfer').append(`
-      //   // <button class="transferBtn">Ready to Transfer</button>
-      //   // `)
-      //   // $('.transfer').empty();
-      //   // $('.transfer').append(`<td>${koala.ready_to_transfer}<button class="transferBtn">Ready To Transfer</button></td>`)
-
-      //   console.log('there should be 2 of these logs');
-      // }
-
+      // Create conditional that adds ready to transfer button
 
     row.data('koala', koala);
+
     $('#viewKoalas').append(row);
+
     }
 }
