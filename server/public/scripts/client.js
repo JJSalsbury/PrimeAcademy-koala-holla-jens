@@ -9,6 +9,7 @@ $( document ).ready( function(){
 
 }); // end doc ready
 
+//Click listeners 
 function setupClickListeners() {
   $( '#addButton' ).on( 'click', function(){
     console.log( 'in addButton on click' );
@@ -16,17 +17,18 @@ function setupClickListeners() {
     // NOT WORKING YET :(
     // using a test object
     let koalaToSend = {
-      name: 'testName',
-      age: 'testName',
-      gender: 'testName',
-      ready_to_transfer: 'testName',
-      notes: 'testName',
+      name: $('#nameIn').val(),
+      age: $('#ageIn').val(),
+      gender: $('#genderIn').val(),
+      ready_to_transfer: $('#readyForTransferIn').val(),
+      notes: $('#notesIn').val(),
     };
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
   }); 
 }
 
+//Gets Koala data 
 function getKoalas(){
   console.log( 'in getKoalas' );
   // ajax call to server to get koalas
@@ -42,14 +44,25 @@ function getKoalas(){
   
 } // end getKoalas
 
+//Add new Koala 
 function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
   // ajax call to server to get koalas
- 
+  $.ajax({
+    type: 'POST',
+    url: '/koalas',
+    data: newKoala, 
+  }).then(function(response){
+    console.log('Response from sever', response);
+    getKoalas();
+  }).catch(function(err){
+    console.log('Error in POST', err);
+  })
 }
 
+//renders to the DOM 
 function render(koalas){
-
+  $('#viewKoalas').empty();
     for(let koala of koalas){
 
       let row = $(`
