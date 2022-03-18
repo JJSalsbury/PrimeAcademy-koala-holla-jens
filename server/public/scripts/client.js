@@ -70,10 +70,17 @@ function render(koalas){
         <td>${koala.name}</td>
         <td>${koala.age}</td>
         <td>${koala.gender}</td>
-        <td>${koala.ready_to_transfer}</td>
+        <td class="transfer">${koala.ready_to_transfer}</td>
         <td>${koala.notes}</td>
       </tr>
       `)
+
+      //Create conditional that adds ready to transfer button
+
+      if (koala.ready_to_transfer === false) {
+
+      }
+
 
     row.data('koala', koala);
     $('#viewKoalas').append(row);
