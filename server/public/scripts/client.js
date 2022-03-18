@@ -25,7 +25,10 @@ function setupClickListeners() {
     };
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
+    $('input').val('');
   }); 
+
+  $('#viewKoalas').on('click', '.transferBtn', updateKoala);
 }
 
 //Gets Koala data 
@@ -60,29 +63,59 @@ function saveKoala( newKoala ){
   })
 }
 
+function updateKoala(){
+  // console.log('SAVE THE KOALAS THEY CANNOT SAVE THEMSELVES');
+  //variable to pull out data from koala object: 
+
+  let koala = $(this).closest("tr").data("koala");
+  let id = koala.id;
+
+  console.log(koala, id);
+
+  //ajax PUT request to send ID and transfer status:
+
+  $.ajax({
+    url: `/koalas/${id}`,
+    method: 'PUT',
+    data: {
+      transferStatus: koala.ready_to_transfer
+    }
+  }).then(function (response){
+    console.log('UPDATED KOALA');
+    getKoalas();
+  }).catch(function (err){
+    console.log('EVERYTHING BROKE WHEN COMING BACK FROM UPDATE: ', err);
+  });
+}
+
 //renders to the DOM 
 function render(koalas){
   $('#viewKoalas').empty();
     for(let koala of koalas){
+
+      let button = "";
+
+      if (koala.ready_to_transfer === false) {
+        button = (`<button class="transferBtn">Ready To Transfer</button>`);
+         // console.log('there should be 2 of these logs');
+       }
 
       let row = $(`
       <tr>
         <td>${koala.name}</td>
         <td>${koala.age}</td>
         <td>${koala.gender}</td>
-        <td class="transfer">${koala.ready_to_transfer}</td>
+        <td>${koala.ready_to_transfer}</td>
+        <td>${button}</td>
         <td>${koala.notes}</td>
       </tr>
       `)
 
-      //Create conditional that adds ready to transfer button
-
-      if (koala.ready_to_transfer === false) {
-
-      }
-
+      // Create conditional that adds ready to transfer button
 
     row.data('koala', koala);
+
     $('#viewKoalas').append(row);
+
     }
 }
