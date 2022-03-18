@@ -40,6 +40,12 @@ koalaRouter.post('/', (req, res) => {
 
 // PUT
 
+koalaRouter.put('/:id', (req, res) => {
+let id = req.params.id;
+let content = req.body.transferStatus;
+
+console.log(id, content);
+})
 
 // DELETE
 
